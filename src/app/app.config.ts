@@ -8,6 +8,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(), // Para llamadas a la API de Rick and Morty
+    provideHttpClient(),
   ]
 };
