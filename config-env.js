@@ -7,33 +7,27 @@ const { hideBin } = require('yargs/helpers');
 const argv = yargs(hideBin(process.argv)).argv;
 const environment = argv.environment;
 
-let apiURL;
-let targetPath;
+const apiURL = process.env.API_URL;
+const envDir = './src/environments';
 
-if (environment === 'prod') {
-    apiURL = process.env.API_URL;
-    targetPath = `./src/environments/environment.prod.ts`;
-} else {
-    apiURL = process.env.API_URL;
-    targetPath = `./src/environments/environment.ts`;
-}
-
-const envConfigFile = `export const environment = {
-  production: ${environment === 'prod'},
-  apiUrl: "${apiURL}"
-};
-`;
-
-const envDir = path.dirname(targetPath);
 if (!fs.existsSync(envDir)) {
     fs.mkdirSync(envDir, { recursive: true });
 }
 
-fs.writeFile(targetPath, envConfigFile, function (err) {
-    if (err) {
-        console.error('Error:', err);
-        process.exit(1);
-    } else {
-        console.log(`✅ ${targetPath} generado con API_URL=${apiURL}`);
-    }
-});
+const envDevFile = `export const environment = {
+  production: false,
+  apiUrl: "${apiURL}"
+};
+`;
+
+const envProdFile = `export const environment = {
+  production: true,
+  apiUrl: "${apiURL}"
+};
+`;
+
+fs.writeFileSync(`${envDir}/environment.ts`, envDevFile);
+console.log(`✅ ${envDir}/environment.ts generado con API_URL=${apiURL}`);
+
+fs.writeFileSync(`${envDir}/environment.prod.ts`, envProdFile);
+console.log(`✅ ${envDir}/environment.prod.ts generado con API_URL=${apiURL}`);
