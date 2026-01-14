@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build-vercel"
+  publish = "dist/test-vercel/browser"
+
+[build.environment]
+  NODE_VERSION = "22"
