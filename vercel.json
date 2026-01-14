@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build-vercel",
+  "outputDirectory": "dist/test-vercel/browser",
+  "framework": "angular",
+  "installCommand": "npm install"
+}
