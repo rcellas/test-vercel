@@ -1,11 +1,6 @@
 import { Component, input, computed } from '@angular/core';
 import { BadgeComponent } from '../../atoms/badge/badge.component';
 
-/**
- * Componente Molecule: StatusIndicator
- * Combina Badge atom con lógica de mapeo de estados
- * Principios: Single Responsibility, Composition
- */
 @Component({
   selector: 'app-status-indicator',
   standalone: true,

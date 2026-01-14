@@ -1,11 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/**
- * Componente Organism: ErrorMessage
- * Mensaje de error reutilizable con opción de retry
- * Principios: DRY, Single Responsibility
- */
 @Component({
   selector: 'app-error-message',
   standalone: true,

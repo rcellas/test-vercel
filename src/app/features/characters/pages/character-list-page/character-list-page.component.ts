@@ -6,12 +6,6 @@ import { CharacterGridComponent } from '../../components/character-grid/characte
 import { SpinnerComponent } from '../../../../shared/atoms/spinner/spinner.component';
 import { ErrorMessageComponent } from '../../../../shared/organisms/error-message/error-message.component';
 
-/**
- * Componente Page: CharacterListPage
- * Página principal que orquesta la carga y visualización de personajes
- * Principios: Single Responsibility, Dependency Inversion
- * Angular 21: Signals para estado reactivo, inject() para DI
- */
 @Component({
   selector: 'app-character-list-page',
   standalone: true,
@@ -75,9 +69,7 @@ export class CharacterListPageComponent implements OnInit {
     this.loadCharacters();
   }
 
-  /**
-   * Carga la lista de personajes desde la API
-   */
+  
   loadCharacters(): void {
     this.loading.set(true);
     this.error.set(null);
@@ -97,10 +89,7 @@ export class CharacterListPageComponent implements OnInit {
     });
   }
 
-  /**
-   * Maneja la selección de un personaje
-   * @param character Personaje seleccionado
-   */
+  
   onCharacterSelect(character: Character): void {
     console.log('Personaje seleccionado:', character);
     // Aquí se podría navegar a una página de detalle

@@ -3,11 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Character } from '../../models/character.interface';
 import { CharacterCardComponent } from '../character-card/character-card.component';
 
-/**
- * Componente Organism: CharacterGrid
- * Grid responsive de tarjetas de personajes
- * Principios: Single Responsibility, KISS
- */
 @Component({
   selector: 'app-character-grid',
   standalone: true,

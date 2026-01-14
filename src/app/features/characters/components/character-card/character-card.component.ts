@@ -3,11 +3,6 @@ import { Character } from '../../models/character.interface';
 import { AvatarComponent } from '../../../../shared/atoms/avatar/avatar.component';
 import { StatusIndicatorComponent } from '../../../../shared/molecules/status-indicator/status-indicator.component';
 
-/**
- * Componente Organism: CharacterCard
- * Tarjeta individual de personaje con toda su información
- * Principios: Single Responsibility, Composition
- */
 @Component({
   selector: 'app-character-card',
   standalone: true,

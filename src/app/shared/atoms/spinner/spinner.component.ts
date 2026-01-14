@@ -1,11 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/**
- * Componente Atom: Spinner
- * Spinner de carga reutilizable con diferentes tamaños
- * Principios: DRY, KISS, Single Responsibility
- */
 @Component({
   selector: 'app-spinner',
   standalone: true,
@@ -27,6 +22,6 @@ import { CommonModule } from '@angular/common';
   `,
 })
 export class SpinnerComponent {
-  // Angular 21 Signal Input
+
   size = input<'sm' | 'md' | 'lg'>('md');
 }

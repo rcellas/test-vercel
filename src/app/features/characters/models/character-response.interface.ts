@@ -1,7 +1,4 @@
-/**
- * Interfaces para respuestas de API paginadas
- * Segregación de interfaces según principio SOLID
- */
+
 
 import { Character } from './character.interface';
 

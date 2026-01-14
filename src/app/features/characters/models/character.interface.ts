@@ -1,7 +1,4 @@
-/**
- * Interfaces para la API de Rick and Morty
- * Segregación de interfaces según principio SOLID (Interface Segregation)
- */
+
 
 export interface CharacterLocation {
   name: string;

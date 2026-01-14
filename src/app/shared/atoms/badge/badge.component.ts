@@ -1,11 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/**
- * Componente Atom: Badge
- * Badge reutilizable para mostrar estados con diferentes variantes
- * Principios: DRY, KISS, Open/Closed
- */
 @Component({
   selector: 'app-badge',
   standalone: true,

@@ -1,11 +1,6 @@
 import { Component, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/**
- * Componente Atom: Avatar
- * Avatar de imagen con manejo de errores y fallback
- * Principios: KISS, Single Responsibility
- */
 @Component({
   selector: 'app-avatar',
   standalone: true,
