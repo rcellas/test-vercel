@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { CharacterListPageComponent } from './features/characters/pages/character-list-page/character-list-page.component';
 
+/**
+ * Componente raíz de la aplicación
+ * Angular 21: Standalone component sin NgModule
+ */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [CharacterListPageComponent],
+  template: `
+    <app-character-list-page />
+  `,
 })
-export class App {
-  protected readonly title = signal('test-vercel');
-}
+export class App {}
