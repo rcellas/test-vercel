@@ -7,10 +7,10 @@ let apiURL;
 let targetPath;
 
 if (environment === 'prod') {
-    apiURL = process.env.API_URL || 'https://rickandmortyapi.com/api';
+    apiURL = process.env.API_URL;
     targetPath = `./src/environments/environment.prod.ts`;
 } else {
-    apiURL = process.env.API_URL || 'https://rickandmortyapi.com/api';
+    apiURL = process.env.API_URL;
     targetPath = `./src/environments/environment.ts`;
 }
 
