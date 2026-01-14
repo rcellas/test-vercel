@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
@@ -22,6 +23,11 @@ const envConfigFile = `export const environment = {
   apiUrl: "${apiURL}"
 };
 `;
+
+const envDir = path.dirname(targetPath);
+if (!fs.existsSync(envDir)) {
+    fs.mkdirSync(envDir, { recursive: true });
+}
 
 fs.writeFile(targetPath, envConfigFile, function (err) {
     if (err) {
