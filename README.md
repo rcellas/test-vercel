@@ -1,59 +1,128 @@
-# TestVercel
+# Guía de Despliegue - TestVercel
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+Este documento detalla el proceso para desplgar la aplicación Angular en Vercel, incluyendo la configuración de variables de entorno crítica para el funcionamiento de la aplicación.
 
-## Development server
+## 📋 Requisitos Previos
 
-To start a local development server, run:
+- Cuenta en [Vercel](https://vercel.com/).
+- El código fuente alojado en un repositorio remoto (GitHub, GitLab, Bitbucket).
+- Node.js instalado (para ejecución local).
 
-```bash
-ng serve
+## 📦 Configuraciones en package.json
+
+Para que el flujo de trabajo funcione, se han realizado las siguientes modificaciones en el archivo `package.json`. Si estás configurando esto desde cero, asegúrate de incluir:
+
+### 1. Scripts
+
+Se han añadido/modificado los siguientes scripts para manejar la generación de entornos y el build en Vercel:
+
+```json
+"scripts": {
+  "config": "node config-env.js",
+  "build-vercel": "npm run config -- --environment=prod && ng build",
+  ...
+}
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **`config`**: Ejecuta el script `config-env.js` para generar el archivo de entorno.
+- **`build-vercel`**: Script específico para Vercel. Primero ejecuta `config` pasando el argumento `--environment=prod` y luego lanza el build normal de Angular (`ng build`).
 
-## Code scaffolding
+### 2. Dependencias de Desarrollo
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+El script `config-env.js` requiere las siguientes librerías para leer variables `.env` y procesar argumentos:
 
-```bash
-ng generate component component-name
+```json
+"devDependencies": {
+  "dotenv": "^17.2.3",
+  "yargs": "^18.0.0",
+  ...
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Puedes instalarlas con:
 
 ```bash
-ng generate --help
+npm install -D dotenv yargs
 ```
 
-## Building
+## ⚙️ Configuración del Script de Entorno (`config-env.js`)
 
-To build the project run:
+Para manejar las variables de entorno de forma segura, este proyecto utiliza un script personalizado (`config-env.js`) que genera los archivos `environment.ts` antes de construir la aplicación.
 
-```bash
-ng build
-```
+### Dependencias Necesarias
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Para que este script funcione, el proyecto necesita las siguientes librerías instaladas (ya incluidas en `package.json`):
 
-## Running unit tests
+- **`dotenv`**: Para leer variables de entorno.
+- **`yargs`**: Para procesar argumentos en la línea de comandos.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+> **Nota:** Al ejecutar `npm install` en Vercel (comando predeterminado), estas dependencias se instalan automáticamente.
 
-```bash
-ng test
-```
+### Funcionamiento
 
-## Running end-to-end tests
+El script se ejecuta como parte del comando de build (`npm run build-vercel`).
 
-For end-to-end (e2e) testing, run:
+1.  Lee la variable `API_URL` del entorno de Vercel.
+2.  Crea el archivo `src/environments/environment.prod.ts` con esa URL.
+3.  La aplicación de Angular usa ese archivo para saber a qué backend conectarse.
 
-```bash
-ng e2e
-```
+## � Configuración Paso a Paso en Vercel
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Sigue estos pasos detallados para configurar y desplegar correctamente:
 
-## Additional Resources
+### 1. Importar el Proyecto
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1.  En el dashboard de Vercel, haz clic en **"Add New..."** -> **"Project"**.
+2.  Selecciona tu repositorio (GitHub/GitLab/Bitbucket) y haz clic en **"Import"**.
+
+### 2. Configurar Build y Salida
+
+En la pantalla de configuración (**Configure Project**), asegúrate de que los ajustes coincidan con lo siguiente:
+
+- **Framework Preset:** `Angular` (Debería detectarse automáticamente).
+- **Root Directory:** Déjalo en `./` (raíz).
+- **Build Command:** `npm run build-vercel`
+  - ⚠️ **CRÍTICO:** Debes activar la opción "Override" y escribir este comando exacto. Esto asegura que se ejecute el script `config-env.js` antes del build de Angular.
+- **Output Directory:** `dist/test-vercel/browser`
+  - (O el que corresponda a tu versión de Angular, verifícalo en `angular.json` si tienes dudas).
+
+### 3. Configurar Variables de Entorno
+
+En la sección **"Environment Variables"**:
+
+1.  Añade una nueva variable:
+    - **Key:** `API_URL`
+    - **Value:** La URL de tu backend (ej. `https://mi-api-backend.com`)
+2.  Asegúrate de que esté marcada para el entorno de **Production**.
+3.  Haz clic en **"Add"**.
+
+> **Nota IMPORTANTE:** Si esta variable no está configurada, el archivo `environment.prod.ts` no tendrá la URL correcta y la app fallará al conectar con el backend.
+
+### 4. Desplegar
+
+Haz clic en el botón **"Deploy"**.
+
+- Vercel instalará dependencias (incluyendo `dotenv` y `yargs`).
+- Ejecutará `npm run build-vercel`.
+- El script generará el archivo de entorno con tu `API_URL`.
+- Angular compilará la aplicación usando esa configuración.
+
+---
+
+## 💻 Desarrollo Local
+
+Si necesitas ejecutar la aplicación en tu máquina local:
+
+1.  Instala las dependencias:
+    ```bash
+    npm install
+    ```
+2.  Crea un archivo `.env` en la raíz del proyecto (opcional para local, pero recomendado):
+    ```env
+    API_URL=http://localhost:3000
+    ```
+3.  Inicia el servidor de desarrollo:
+    ```bash
+    npm start
+    ```
+    (Esto ejecuta `ng serve`).
